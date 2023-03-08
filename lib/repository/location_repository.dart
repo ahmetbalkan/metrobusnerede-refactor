@@ -5,9 +5,8 @@ class LocationRepository {
   Future<LocationSettings> locationSettings() async {
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidSettings(
-          accuracy: LocationAccuracy.bestForNavigation,
-          distanceFilter: 5,
-          intervalDuration: const Duration(milliseconds: 500),
+          accuracy: LocationAccuracy.high,
+          distanceFilter: 1,
           foregroundNotificationConfig: const ForegroundNotificationConfig(
             notificationText:
                 "Metrobüs Nerede Uygulaması şuan konumunuza erişim sağlıyor.",

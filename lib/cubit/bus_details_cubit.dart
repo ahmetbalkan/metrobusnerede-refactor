@@ -29,7 +29,7 @@ class BusDetailsCubit extends Cubit<BusDetailsState> {
               speed: null,
               way: true),
         ) {
-    calculateDetails();
+    firstLocation();
   }
 
   final LocationRepository _locationRepository;
@@ -38,51 +38,37 @@ class BusDetailsCubit extends Cubit<BusDetailsState> {
 
   Future<void> calculateDetails() async {
     try {
-      var permission = await _locationRepository.getPermission();
-
-      if (!permission) {
-        emit(state.copyWith(status: const BusDetailsStateStatus.permission()));
-      } else {
-        Geolocator.getPositionStream(
-                locationSettings: await _locationRepository.locationSettings())
-            .listen((Position position) async {
-          var serviceEnabled = await Geolocator.isLocationServiceEnabled();
-          if (!serviceEnabled) {
-            emit(state.copyWith(
-                status: const BusDetailsStateStatus.permission()));
-          } else {
-            if (!await _notificationRepository.checkPermission()) {
-              emit(state.copyWith(
-                  status: const BusDetailsStateStatus.permission()));
-            } else {
-              if (state.alarmID != null &&
-                  state.currentStop?.busstopid == state.alarmID?.busstopid) {
-                await _notificationRepository
-                    .showNotification(state.alarmID!.name);
-                emit(state.copyWith(alarmID: null));
-              }
-              emit(
-                state.copyWith(
-                  busStopList: _calcRepository.busStopModelList(),
-                  status: const BusDetailsStateStatus.loaded(),
-                  alarmCount: await _calcRepository.alarmCount(
-                      state.alarmID, state.way ?? true),
-                  alarmDistance: await _calcRepository.alarmDistance(
-                      position, state.alarmID),
-                  currentStop:
-                      await _calcRepository.currentStop(position, state.way!),
-                  //TODO tüm null bırakılabilirlere null kontrol çek.
-                  nextStop:
-                      await _calcRepository.nextStop(state.way!, position),
-                  nextStopDistance:
-                      await _calcRepository.nextStopDistance(position),
-                  speed: await _calcRepository.speed(position),
-                ),
-              );
-            }
+      Geolocator.getPositionStream(
+              locationSettings: await _locationRepository.locationSettings())
+          .listen((Position position) async {
+        if (!await _notificationRepository.checkPermission()) {
+          emit(
+              state.copyWith(status: const BusDetailsStateStatus.permission()));
+        } else {
+          if (state.alarmID != null &&
+              state.currentStop?.busstopid == state.alarmID?.busstopid) {
+            await _notificationRepository.showNotification(state.alarmID!.name);
+            emit(state.copyWith(alarmID: null));
           }
-        });
-      }
+          emit(
+            state.copyWith(
+              busStopList: _calcRepository.busStopModelList(),
+              status: const BusDetailsStateStatus.loaded(),
+              alarmCount: await _calcRepository.alarmCount(
+                  state.alarmID, state.way ?? true),
+              alarmDistance:
+                  await _calcRepository.alarmDistance(position, state.alarmID),
+              currentStop:
+                  await _calcRepository.currentStop(position, state.way!),
+              //TODO tüm null bırakılabilirlere null kontrol çek.
+              nextStop: await _calcRepository.nextStop(state.way!, position),
+              nextStopDistance:
+                  await _calcRepository.nextStopDistance(position),
+              speed: await _calcRepository.speed(position),
+            ),
+          );
+        }
+      });
     } catch (_) {
       emit(state.copyWith(status: const BusDetailsStateStatus.failure()));
     }
@@ -91,24 +77,26 @@ class BusDetailsCubit extends Cubit<BusDetailsState> {
   Future<void> firstLocation() async {
     try {
       var permission = await _locationRepository.getPermission();
+      var notif = await _notificationRepository.checkPermission();
 
-      if (!permission) {
+      if (!permission || !notif) {
         emit(state.copyWith(status: const BusDetailsStateStatus.permission()));
       } else {
         await _calcRepository.firstLocation(state.way!);
-        //TODO buraya tüm dataları tekrar çekerek ekranı güncelleyebilirim . live locationda yaptığım gibi.
       }
     } catch (_) {
       emit(state.copyWith(status: const BusDetailsStateStatus.failure()));
     }
+    await calculateDetails();
   }
 
   Future<void> changeWay(bool way) async {
+    await _calcRepository.firstLocation(state.way!);
     emit(state.copyWith(way: way, nextStop: null));
-    await _calcRepository.firstLocation(way);
   }
 
   Future<void> setAlarm(BusStopModel busStopModel) async {
+    await _calcRepository.firstLocation(state.way!);
     emit(state.copyWith(alarmID: busStopModel));
   }
 }

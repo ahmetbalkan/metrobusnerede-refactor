@@ -2,7 +2,15 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 
 class NotificationRepository {
   Future<bool> checkPermission() async {
-    return await AwesomeNotifications().isNotificationAllowed();
+    return await AwesomeNotifications().requestPermissionToSendNotifications(
+        channelKey: "metrobus_notification",
+        permissions: [
+          NotificationPermission.Vibration,
+          NotificationPermission.Sound,
+          NotificationPermission.FullScreenIntent,
+          NotificationPermission.Alert,
+          NotificationPermission.Badge,
+        ]);
   }
 
   Future<void> showNotification(String busstopName) async {

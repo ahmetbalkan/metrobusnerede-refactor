@@ -15,9 +15,29 @@ class IsarRepository extends OpenDB {
     });
   }
 
+  Future<void> updateBusStop(BusStopModel busStop, int id) async {
+    final isar = await _db;
+    await isar.writeTxn(() async {
+      busStop.id = id;
+      await isar.busStopModels.put(busStop);
+    });
+  }
+
   Future<void> cleanDb() async {
     final isar = await _db;
     await isar.writeTxn(() => isar.busStopModels.clear());
+  }
+
+  Future<List<BusStopModel>> getBusStop() async {
+    final isar = await _db;
+    final result = await isar.busStopModels.where().findAll();
+    return result;
+  }
+
+  Future<List<BusStopModel>> getBusStopByID(int id) async {
+    final isar = await _db;
+    final result = await isar.busStopModels.filter().idEqualTo(id).findAll();
+    return result;
   }
 
   Future<BusStopModel> currentBusStop() async {
@@ -26,9 +46,8 @@ class IsarRepository extends OpenDB {
     return result[0];
   }
 
-  Future<List<BusStopModel>> nextBusStop() async {
+  Stream<List<BusStopModel>> listenBusStops() async* {
     final isar = await _db;
-    final result = await isar.busStopModels.filter().idEqualTo(2).findAll();
-    return result;
+    yield* isar.busStopModels.where().watch(fireImmediately: true);
   }
 }

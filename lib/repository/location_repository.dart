@@ -2,11 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationRepository {
-  Future<LocationSettings> locationSettings() async {
+  LocationSettings locationSettings() {
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidSettings(
           accuracy: LocationAccuracy.high,
-          distanceFilter: 1,
+          distanceFilter: 5,
+          intervalDuration: const Duration(milliseconds: 500),
           foregroundNotificationConfig: const ForegroundNotificationConfig(
             notificationText:
                 "Metrobüs Nerede Uygulaması şuan konumunuza erişim sağlıyor.",

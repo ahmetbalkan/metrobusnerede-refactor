@@ -10,14 +10,60 @@ class CalcRepository {
   final _isarRepository = IsarRepository();
   final _locationRepository = LocationRepository();
 
+  Future<void> saveBusStops(Position location) async {
+    var distanceList = await _returnDistance(location);
+    double minDistance = await _findMin(distanceList);
+
+    for (var i = 0; i < distanceList.length; i++) {
+      if (distanceList[i] == minDistance) {
+        await _isarRepository.saveBusStop(busStopModelList()[i - 1]);
+        await _isarRepository.saveBusStop(busStopModelList()[i]);
+        await _isarRepository.saveBusStop(busStopModelList()[i + 1]);
+      }
+    }
+  }
+
+  Future<void> updateBusStops(Position location) async {
+    var distanceList = await _returnDistance(location);
+    double minDistance = await _findMin(distanceList);
+    for (var i = 0; i < distanceList.length; i++) {
+      if (distanceList[i] == minDistance) {
+        if (minDistance < busStopModelList()[i].check / 2) {
+          await _isarRepository.updateBusStop(busStopModelList()[i - 1], 1); //0
+          await _isarRepository.updateBusStop(busStopModelList()[i], 2);
+          await _isarRepository.updateBusStop(
+              busStopModelList()[i + 1], 3); //43
+        }
+      }
+    }
+  }
+
+  Future<BusStopModel> nextBusStop(bool way) async {
+    var current = await _isarRepository.getBusStop();
+    if (current.isNotEmpty) {
+      if (way == true) {
+        return current[2];
+      } else {
+        return current[0];
+      }
+    } else {
+      var current = await _isarRepository.getBusStop();
+      if (way == true) {
+        return current[2];
+      } else {
+        return current[0];
+      }
+    }
+  }
+
   Future<int> alarmCount(BusStopModel? alarmBusStop, bool way) async {
     var current = await _isarRepository.currentBusStop();
     if (current != null && alarmBusStop != null) {
       if (way == true) {
-        final result = alarmBusStop.busstopid - current.busstopid;
+        final result = alarmBusStop.busstopid - current.busstopid - 1;
         return result;
       } else {
-        final result = current.busstopid - alarmBusStop.busstopid;
+        final result = current.busstopid - alarmBusStop.busstopid + 1;
         print(result);
         return result;
       }
@@ -35,80 +81,15 @@ class CalcRepository {
     return 0;
   }
 
-  Future<BusStopModel?> currentStop(Position location, bool way) async {
-    var distanceList = await _returnDistance(location);
-    double minDistance = await _findMin(distanceList);
-    for (var i = 0; i < distanceList.length; i++) {
-      if (distanceList[i] == minDistance) {
-        if (minDistance < busStopModelList()[i].check / 2) {
-          await _isarRepository.cleanDb();
-          await _isarRepository.saveBusStop(busStopModelList()[i]);
-          if (way == true) {
-            await _isarRepository.saveBusStop(busStopModelList()[i + 1]);
-          } else {
-            await _isarRepository.saveBusStop(busStopModelList()[i - 1]);
-          }
-
-          //TODO başlangıç ve son durak hata veriyor.
-          return busStopModelList()[i];
-        }
-      }
-    }
-
-    return null;
-  }
-
-  Future<void>? firstLocation(bool way) async {
-    try {
-      Position location = await _locationRepository.getLocation();
-      var distanceList = await _returnDistance(location);
-      double minDistance = await _findMin(distanceList);
-      for (var i = 0; i < distanceList.length; i++) {
-        if (distanceList[i] == minDistance) {
-          await _isarRepository.cleanDb();
-          await _isarRepository.saveBusStop(busStopModelList()[i]);
-          if (way == true) {
-            await _isarRepository.saveBusStop(busStopModelList()[i + 1]);
-          } else {
-            await _isarRepository.saveBusStop(busStopModelList()[i - 1]);
-          }
-        }
-      }
-    } catch (e) {
-      return Future.error("Data Alınamıyor");
-    }
-  }
-
-  Future<BusStopModel> nextStop(bool way, Position location) async {
-    var nextStop = await _isarRepository.nextBusStop();
-    if (nextStop.isNotEmpty) {
-      return nextStop[0];
-    } else {
-      await firstLocation(way);
-      var nextStop = await _isarRepository.nextBusStop();
-      return nextStop[0];
-    }
-  }
-
-  Future<int> nextStopDistance(Position position) async {
-    var nextStop = await _isarRepository.nextBusStop();
-
-    if (nextStop.isNotEmpty) {
+  Future<int> nextStopDistance(bool way, BusStopModel nextStop) async {
+    final position = await Geolocator.getCurrentPosition();
+    if (nextStop.name.isNotEmpty) {
       var distance = await _calculateDistance(position.latitude,
-          position.longitude, nextStop[0].latitude, nextStop[0].longitude);
+          position.longitude, nextStop.latitude, nextStop.longitude);
 
       return distance.toInt();
     }
     return 0;
-  }
-
-  Future<int> speed(Position location) async {
-    double speed = (location.speed * 18) / 5;
-    return speed.toInt();
-  }
-
-  Future<double> _findMin(List<double> distances) async {
-    return distances.reduce(min);
   }
 
   List<BusStopModel> busStopModelList() {
@@ -198,6 +179,10 @@ class CalcRepository {
     busStopModelList
         .add(BusStopModel(43, "S.CESME SONDURAK", 40.9923, 29.0359, 130));
     return busStopModelList;
+  }
+
+  Future<double> _findMin(List<double> distances) async {
+    return distances.reduce(min);
   }
 
   Future<List<double>> _returnDistance(Position location) async {

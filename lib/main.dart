@@ -17,30 +17,6 @@ import 'views/warning_pages/network_disable_page.dart';
 import 'views/warning_pages/location_permission_page.dart';
 
 void main() {
-  AwesomeNotifications().initialize(
-      "resource://drawable/ic_launcher",
-      [
-        NotificationChannel(
-          channelGroupKey: 'metrobus_nerede',
-          channelKey: 'metrobus_notification',
-          channelName: 'Metrobüs Nerede?',
-          channelDescription: 'Durağa vardığınızda gösterilen bildirim.',
-          enableVibration: true,
-          playSound: true,
-          defaultPrivacy: NotificationPrivacy.Public,
-          importance: NotificationImportance.High,
-          criticalAlerts: true,
-          channelShowBadge: true,
-          icon: "resource://drawable/ic_launcher",
-          soundSource: "resource://raw/noti",
-        )
-      ],
-      channelGroups: [
-        NotificationChannelGroup(
-            channelGroupKey: 'metrobus_nerede_group',
-            channelGroupName: 'Metrobüs Nerede?')
-      ],
-      debug: true);
   runApp(
     const MyApp(),
   );
@@ -98,7 +74,9 @@ class MyApp extends StatelessWidget {
                 loading: () => const LoaderPage(),
                 loaded: () => const MainPage(),
                 failure: () => const FailPage(),
-                permission: () => const LocationPermissionPage(),
+                locationpermission: () => const LocationPermissionPage(),
+                notificationpermission: () =>
+                    const NotificationPermissionPage(),
                 locationdisable: () => const LocationDisablePage(),
                 networkdisable: () => const NetworkDisablePage(),
               ),

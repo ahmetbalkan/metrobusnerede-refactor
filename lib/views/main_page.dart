@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:measured_size/measured_size.dart';
 import 'package:metrobustest/tools/extention.dart';
 import 'package:metrobustest/views/way_page.dart';
 import 'dart:math' as math;
@@ -57,37 +56,50 @@ class _MainPageState extends State<MainPage> {
                 ),
                 Expanded(
                     flex: 5,
-                    child: MeasuredSize(
-                      onChange: (asd) {
-                        //TODO bloc yap.
-                        setState(() {
-                          size = asd.height;
-                        });
-                      },
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(width: 1, color: Colors.white),
-                            left: BorderSide(width: 1, color: Colors.white),
-                            top: BorderSide(width: 1, color: Colors.white),
-                          ),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(width: 1, color: Colors.white),
+                          left: BorderSide(width: 1, color: Colors.white),
+                          top: BorderSide(width: 1, color: Colors.white),
                         ),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: ListView.builder(
+                      ),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: LayoutBuilder(
+                              builder: (BuildContext context,
+                                      BoxConstraints constraints) =>
+                                  ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: state.busStopList?.length,
+                                itemExtent: constraints.maxHeight / 44,
                                 itemBuilder: (context, index) {
                                   return Container(
-                                    decoration: const BoxDecoration(
-                                      border: Border(
+                                    decoration: BoxDecoration(
+                                      color: state.nextStop?.name == null
+                                          ? null
+                                          : (state.way == false
+                                                      ? index - 1
+                                                      : index + 1) ==
+                                                  state.nextStop?.busstopid
+                                              ? Colors.green
+                                              : (state.way == false
+                                                          ? index - 1
+                                                          : index + 1) ==
+                                                      43
+                                                  ? null
+                                                  : index ==
+                                                          state.nextStop
+                                                              ?.busstopid
+                                                      ? Colors.orange.shade600
+                                                      : null,
+                                      border: const Border(
                                         bottom: BorderSide(
                                             width: 1, color: Colors.white),
                                       ),
                                     ),
                                     width: MediaQuery.of(context).size.width,
-                                    height: size / 44,
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
                                       child: Align(
@@ -106,8 +118,8 @@ class _MainPageState extends State<MainPage> {
                                 },
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     )),
                 Expanded(
@@ -118,17 +130,18 @@ class _MainPageState extends State<MainPage> {
                       child: Column(
                         children: [
                           Expanded(
+                              flex: 1,
                               child: Container(
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                bottom:
-                                    BorderSide(width: 1, color: Colors.white),
-                              ),
-                            ),
-                            padding: const EdgeInsets.all(5),
-                            width: MediaQuery.of(context).size.width,
-                            child: Image.asset("assets/images/logo.png"),
-                          )),
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        width: 1, color: Colors.white),
+                                  ),
+                                ),
+                                padding: const EdgeInsets.all(5),
+                                width: MediaQuery.of(context).size.width,
+                                child: Image.asset("assets/images/logo.png"),
+                              )),
                           Expanded(
                             flex: 1,
                             child: InkWell(
@@ -184,8 +197,6 @@ class _MainPageState extends State<MainPage> {
                                           child: state.way == false
                                               ? Transform(
                                                   alignment: Alignment.center,
-                                                  // to mirror, rotate Y axis
-                                                  // math.pi is 180 degree in radian
                                                   transform: Matrix4.rotationY(
                                                       math.pi),
                                                   child: Lottie.asset(
@@ -529,22 +540,28 @@ class _MainPageState extends State<MainPage> {
                                           )),
                                       Expanded(
                                           flex: 5,
-                                          child: Row(
+                                          child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Text(
-                                                  state.alarmDistance
-                                                      .toString(),
+                                              Expanded(
+                                                flex: 3,
+                                                child: Text(
+                                                    state.alarmDistance
+                                                        .toString(),
+                                                    textAlign: TextAlign.center,
+                                                    style: context.fontStyleLed(
+                                                        Colors.white, 24)),
+                                              ),
+                                              const Expanded(
+                                                flex: 1,
+                                                child: Text(
+                                                  "metre",
                                                   textAlign: TextAlign.center,
-                                                  style: context.fontStyleLed(
-                                                      Colors.white, 24)),
-                                              const Text(
-                                                " /m",
-                                                textAlign: TextAlign.end,
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.white),
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.white),
+                                                ),
                                               ),
                                             ],
                                           )),
@@ -576,14 +593,16 @@ class _MainPageState extends State<MainPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Text(
-                                                  state.alarmCount!.isNegative
-                                                      ? "TERS YON"
-                                                      : state.alarmCount
-                                                          .toString(),
-                                                  textAlign: TextAlign.center,
-                                                  style: context.fontStyleLed(
-                                                      Colors.white, 24)),
+                                              Expanded(
+                                                child: Text(
+                                                    state.alarmCount!.isNegative
+                                                        ? "TERS YON"
+                                                        : state.alarmCount
+                                                            .toString(),
+                                                    textAlign: TextAlign.center,
+                                                    style: context.fontStyleLed(
+                                                        Colors.white, 22)),
+                                              ),
                                             ],
                                           )),
                                       const Spacer()

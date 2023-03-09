@@ -26,7 +26,10 @@ class BusDetailsStateStatus with _$BusDetailsStateStatus {
   const factory BusDetailsStateStatus.loading() = _loading;
   const factory BusDetailsStateStatus.loaded() = _loaded;
   const factory BusDetailsStateStatus.failure() = _failure;
-  const factory BusDetailsStateStatus.permission() = _permission;
+  const factory BusDetailsStateStatus.locationpermission() =
+      _locationpermission;
+  const factory BusDetailsStateStatus.notificationpermission() =
+      _notificationpermission;
   const factory BusDetailsStateStatus.locationdisable() = _locationdisable;
   const factory BusDetailsStateStatus.networkdisable() = _networkdisable;
 }

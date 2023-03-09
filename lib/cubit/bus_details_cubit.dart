@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:metrobustest/repository/isar_service.dart';
@@ -16,6 +18,7 @@ class BusDetailsCubit extends Cubit<BusDetailsState> {
   })  : _locationRepository = locationRepository,
         _calcRepository = calcRepository,
         _notificationRepository = notificationRepository,
+        _isarRepository = isarRepository,
         super(
           const BusDetailsState(
               status: BusDetailsStateStatus.loading(),
@@ -29,74 +32,55 @@ class BusDetailsCubit extends Cubit<BusDetailsState> {
               speed: null,
               way: true),
         ) {
-    firstLocation();
+    getLocation();
   }
 
   final LocationRepository _locationRepository;
   final CalcRepository _calcRepository;
   final NotificationRepository _notificationRepository;
+  final IsarRepository _isarRepository;
 
-  Future<void> calculateDetails() async {
-    try {
-      Geolocator.getPositionStream(
-              locationSettings: await _locationRepository.locationSettings())
-          .listen((Position position) async {
-        if (!await _notificationRepository.checkPermission()) {
-          emit(
-              state.copyWith(status: const BusDetailsStateStatus.permission()));
-        } else {
-          if (state.alarmID != null &&
-              state.currentStop?.busstopid == state.alarmID?.busstopid) {
-            await _notificationRepository.showNotification(state.alarmID!.name);
-            emit(state.copyWith(alarmID: null));
-          }
-          emit(
-            state.copyWith(
-              busStopList: _calcRepository.busStopModelList(),
-              status: const BusDetailsStateStatus.loaded(),
-              alarmCount: await _calcRepository.alarmCount(
-                  state.alarmID, state.way ?? true),
-              alarmDistance:
-                  await _calcRepository.alarmDistance(position, state.alarmID),
-              currentStop:
-                  await _calcRepository.currentStop(position, state.way!),
-              //TODO tüm null bırakılabilirlere null kontrol çek.
-              nextStop: await _calcRepository.nextStop(state.way!, position),
-              nextStopDistance:
-                  await _calcRepository.nextStopDistance(position),
-              speed: await _calcRepository.speed(position),
-            ),
-          );
-        }
-      });
-    } catch (_) {
-      emit(state.copyWith(status: const BusDetailsStateStatus.failure()));
-    }
+  Future<void> getLocation() async {
+    Geolocator.getPositionStream(
+            locationSettings: _locationRepository.locationSettings())
+        .listen((Position position) async {
+      await _calcRepository.updateBusStops(position);
+      await confirmCalculatedData(position);
+    });
   }
 
-  Future<void> firstLocation() async {
-    try {
-      var permission = await _locationRepository.getPermission();
-      var notif = await _notificationRepository.checkPermission();
-
-      if (!permission || !notif) {
-        emit(state.copyWith(status: const BusDetailsStateStatus.permission()));
-      } else {
-        await _calcRepository.firstLocation(state.way!);
-      }
-    } catch (_) {
-      emit(state.copyWith(status: const BusDetailsStateStatus.failure()));
-    }
-    await calculateDetails();
+  Future<void> confirmCalculatedData(Position position) async {
+    _isarRepository.listenBusStops().listen((event) async {
+      emit(state.copyWith(
+          status: const BusDetailsStateStatus.loaded(),
+          currentStop: event[1],
+          nextStop: state.way == true ? event[2] : event[0],
+          nextStopDistance: await _calcRepository.nextStopDistance(
+              state.way!, state.way == true ? event[2] : state.currentStop!),
+          speed: (position.speed * 18) ~/ 5,
+          alarmCount: await _calcRepository.alarmCount(
+              state.alarmID, state.way ?? true),
+          busStopList: _calcRepository.busStopModelList()));
+    });
   }
 
   Future<void> changeWay(bool way) async {
-    await _calcRepository.firstLocation(state.way!);
-    emit(state.copyWith(way: way, nextStop: null));
+    var next = await _calcRepository.nextBusStop(way);
+    emit(state.copyWith(
+        way: way,
+        nextStop: next,
+        nextStopDistance: await _calcRepository.nextStopDistance(way, next)));
   }
 
   Future<void> setAlarm(BusStopModel busStopModel) async {
-    await _calcRepository.firstLocation(state.way!);
-    emit(state.copyWith(alarmID: busStopModel));
+    var position = await _locationRepository.getLocation();
+    emit(state.copyWith(
+        alarmID: busStopModel,
+        alarmDistance:
+            await _calcRepository.alarmDistance(position, busStopModel),
+        alarmCount:
+            await _calcRepository.alarmCount(busStopModel, state.way!)));
   }
+
+  Future<void> notificationPerm() async {}
 }

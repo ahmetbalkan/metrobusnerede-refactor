@@ -2,6 +2,10 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 
 class NotificationRepository {
   Future<bool> checkPermission() async {
+    return await AwesomeNotifications().isNotificationAllowed();
+  }
+
+  Future<bool> requestPermission() async {
     return await AwesomeNotifications().requestPermissionToSendNotifications(
         channelKey: "metrobus_notification",
         permissions: [

@@ -362,7 +362,8 @@ mixin _$BusDetailsStateStatus {
     required TResult Function() loading,
     required TResult Function() loaded,
     required TResult Function() failure,
-    required TResult Function() permission,
+    required TResult Function() locationpermission,
+    required TResult Function() notificationpermission,
     required TResult Function() locationdisable,
     required TResult Function() networkdisable,
   }) =>
@@ -372,7 +373,8 @@ mixin _$BusDetailsStateStatus {
     TResult? Function()? loading,
     TResult? Function()? loaded,
     TResult? Function()? failure,
-    TResult? Function()? permission,
+    TResult? Function()? locationpermission,
+    TResult? Function()? notificationpermission,
     TResult? Function()? locationdisable,
     TResult? Function()? networkdisable,
   }) =>
@@ -382,7 +384,8 @@ mixin _$BusDetailsStateStatus {
     TResult Function()? loading,
     TResult Function()? loaded,
     TResult Function()? failure,
-    TResult Function()? permission,
+    TResult Function()? locationpermission,
+    TResult Function()? notificationpermission,
     TResult Function()? locationdisable,
     TResult Function()? networkdisable,
     required TResult orElse(),
@@ -393,7 +396,9 @@ mixin _$BusDetailsStateStatus {
     required TResult Function(_loading value) loading,
     required TResult Function(_loaded value) loaded,
     required TResult Function(_failure value) failure,
-    required TResult Function(_permission value) permission,
+    required TResult Function(_locationpermission value) locationpermission,
+    required TResult Function(_notificationpermission value)
+        notificationpermission,
     required TResult Function(_locationdisable value) locationdisable,
     required TResult Function(_networkdisable value) networkdisable,
   }) =>
@@ -403,7 +408,8 @@ mixin _$BusDetailsStateStatus {
     TResult? Function(_loading value)? loading,
     TResult? Function(_loaded value)? loaded,
     TResult? Function(_failure value)? failure,
-    TResult? Function(_permission value)? permission,
+    TResult? Function(_locationpermission value)? locationpermission,
+    TResult? Function(_notificationpermission value)? notificationpermission,
     TResult? Function(_locationdisable value)? locationdisable,
     TResult? Function(_networkdisable value)? networkdisable,
   }) =>
@@ -413,7 +419,8 @@ mixin _$BusDetailsStateStatus {
     TResult Function(_loading value)? loading,
     TResult Function(_loaded value)? loaded,
     TResult Function(_failure value)? failure,
-    TResult Function(_permission value)? permission,
+    TResult Function(_locationpermission value)? locationpermission,
+    TResult Function(_notificationpermission value)? notificationpermission,
     TResult Function(_locationdisable value)? locationdisable,
     TResult Function(_networkdisable value)? networkdisable,
     required TResult orElse(),
@@ -480,7 +487,8 @@ class _$_loading implements _loading {
     required TResult Function() loading,
     required TResult Function() loaded,
     required TResult Function() failure,
-    required TResult Function() permission,
+    required TResult Function() locationpermission,
+    required TResult Function() notificationpermission,
     required TResult Function() locationdisable,
     required TResult Function() networkdisable,
   }) {
@@ -493,7 +501,8 @@ class _$_loading implements _loading {
     TResult? Function()? loading,
     TResult? Function()? loaded,
     TResult? Function()? failure,
-    TResult? Function()? permission,
+    TResult? Function()? locationpermission,
+    TResult? Function()? notificationpermission,
     TResult? Function()? locationdisable,
     TResult? Function()? networkdisable,
   }) {
@@ -506,7 +515,8 @@ class _$_loading implements _loading {
     TResult Function()? loading,
     TResult Function()? loaded,
     TResult Function()? failure,
-    TResult Function()? permission,
+    TResult Function()? locationpermission,
+    TResult Function()? notificationpermission,
     TResult Function()? locationdisable,
     TResult Function()? networkdisable,
     required TResult orElse(),
@@ -523,7 +533,9 @@ class _$_loading implements _loading {
     required TResult Function(_loading value) loading,
     required TResult Function(_loaded value) loaded,
     required TResult Function(_failure value) failure,
-    required TResult Function(_permission value) permission,
+    required TResult Function(_locationpermission value) locationpermission,
+    required TResult Function(_notificationpermission value)
+        notificationpermission,
     required TResult Function(_locationdisable value) locationdisable,
     required TResult Function(_networkdisable value) networkdisable,
   }) {
@@ -536,7 +548,8 @@ class _$_loading implements _loading {
     TResult? Function(_loading value)? loading,
     TResult? Function(_loaded value)? loaded,
     TResult? Function(_failure value)? failure,
-    TResult? Function(_permission value)? permission,
+    TResult? Function(_locationpermission value)? locationpermission,
+    TResult? Function(_notificationpermission value)? notificationpermission,
     TResult? Function(_locationdisable value)? locationdisable,
     TResult? Function(_networkdisable value)? networkdisable,
   }) {
@@ -549,7 +562,8 @@ class _$_loading implements _loading {
     TResult Function(_loading value)? loading,
     TResult Function(_loaded value)? loaded,
     TResult Function(_failure value)? failure,
-    TResult Function(_permission value)? permission,
+    TResult Function(_locationpermission value)? locationpermission,
+    TResult Function(_notificationpermission value)? notificationpermission,
     TResult Function(_locationdisable value)? locationdisable,
     TResult Function(_networkdisable value)? networkdisable,
     required TResult orElse(),
@@ -604,7 +618,8 @@ class _$_loaded implements _loaded {
     required TResult Function() loading,
     required TResult Function() loaded,
     required TResult Function() failure,
-    required TResult Function() permission,
+    required TResult Function() locationpermission,
+    required TResult Function() notificationpermission,
     required TResult Function() locationdisable,
     required TResult Function() networkdisable,
   }) {
@@ -617,7 +632,8 @@ class _$_loaded implements _loaded {
     TResult? Function()? loading,
     TResult? Function()? loaded,
     TResult? Function()? failure,
-    TResult? Function()? permission,
+    TResult? Function()? locationpermission,
+    TResult? Function()? notificationpermission,
     TResult? Function()? locationdisable,
     TResult? Function()? networkdisable,
   }) {
@@ -630,7 +646,8 @@ class _$_loaded implements _loaded {
     TResult Function()? loading,
     TResult Function()? loaded,
     TResult Function()? failure,
-    TResult Function()? permission,
+    TResult Function()? locationpermission,
+    TResult Function()? notificationpermission,
     TResult Function()? locationdisable,
     TResult Function()? networkdisable,
     required TResult orElse(),
@@ -647,7 +664,9 @@ class _$_loaded implements _loaded {
     required TResult Function(_loading value) loading,
     required TResult Function(_loaded value) loaded,
     required TResult Function(_failure value) failure,
-    required TResult Function(_permission value) permission,
+    required TResult Function(_locationpermission value) locationpermission,
+    required TResult Function(_notificationpermission value)
+        notificationpermission,
     required TResult Function(_locationdisable value) locationdisable,
     required TResult Function(_networkdisable value) networkdisable,
   }) {
@@ -660,7 +679,8 @@ class _$_loaded implements _loaded {
     TResult? Function(_loading value)? loading,
     TResult? Function(_loaded value)? loaded,
     TResult? Function(_failure value)? failure,
-    TResult? Function(_permission value)? permission,
+    TResult? Function(_locationpermission value)? locationpermission,
+    TResult? Function(_notificationpermission value)? notificationpermission,
     TResult? Function(_locationdisable value)? locationdisable,
     TResult? Function(_networkdisable value)? networkdisable,
   }) {
@@ -673,7 +693,8 @@ class _$_loaded implements _loaded {
     TResult Function(_loading value)? loading,
     TResult Function(_loaded value)? loaded,
     TResult Function(_failure value)? failure,
-    TResult Function(_permission value)? permission,
+    TResult Function(_locationpermission value)? locationpermission,
+    TResult Function(_notificationpermission value)? notificationpermission,
     TResult Function(_locationdisable value)? locationdisable,
     TResult Function(_networkdisable value)? networkdisable,
     required TResult orElse(),
@@ -729,7 +750,8 @@ class _$_failure implements _failure {
     required TResult Function() loading,
     required TResult Function() loaded,
     required TResult Function() failure,
-    required TResult Function() permission,
+    required TResult Function() locationpermission,
+    required TResult Function() notificationpermission,
     required TResult Function() locationdisable,
     required TResult Function() networkdisable,
   }) {
@@ -742,7 +764,8 @@ class _$_failure implements _failure {
     TResult? Function()? loading,
     TResult? Function()? loaded,
     TResult? Function()? failure,
-    TResult? Function()? permission,
+    TResult? Function()? locationpermission,
+    TResult? Function()? notificationpermission,
     TResult? Function()? locationdisable,
     TResult? Function()? networkdisable,
   }) {
@@ -755,7 +778,8 @@ class _$_failure implements _failure {
     TResult Function()? loading,
     TResult Function()? loaded,
     TResult Function()? failure,
-    TResult Function()? permission,
+    TResult Function()? locationpermission,
+    TResult Function()? notificationpermission,
     TResult Function()? locationdisable,
     TResult Function()? networkdisable,
     required TResult orElse(),
@@ -772,7 +796,9 @@ class _$_failure implements _failure {
     required TResult Function(_loading value) loading,
     required TResult Function(_loaded value) loaded,
     required TResult Function(_failure value) failure,
-    required TResult Function(_permission value) permission,
+    required TResult Function(_locationpermission value) locationpermission,
+    required TResult Function(_notificationpermission value)
+        notificationpermission,
     required TResult Function(_locationdisable value) locationdisable,
     required TResult Function(_networkdisable value) networkdisable,
   }) {
@@ -785,7 +811,8 @@ class _$_failure implements _failure {
     TResult? Function(_loading value)? loading,
     TResult? Function(_loaded value)? loaded,
     TResult? Function(_failure value)? failure,
-    TResult? Function(_permission value)? permission,
+    TResult? Function(_locationpermission value)? locationpermission,
+    TResult? Function(_notificationpermission value)? notificationpermission,
     TResult? Function(_locationdisable value)? locationdisable,
     TResult? Function(_networkdisable value)? networkdisable,
   }) {
@@ -798,7 +825,8 @@ class _$_failure implements _failure {
     TResult Function(_loading value)? loading,
     TResult Function(_loaded value)? loaded,
     TResult Function(_failure value)? failure,
-    TResult Function(_permission value)? permission,
+    TResult Function(_locationpermission value)? locationpermission,
+    TResult Function(_notificationpermission value)? notificationpermission,
     TResult Function(_locationdisable value)? locationdisable,
     TResult Function(_networkdisable value)? networkdisable,
     required TResult orElse(),
@@ -815,35 +843,35 @@ abstract class _failure implements BusDetailsStateStatus {
 }
 
 /// @nodoc
-abstract class _$$_permissionCopyWith<$Res> {
-  factory _$$_permissionCopyWith(
-          _$_permission value, $Res Function(_$_permission) then) =
-      __$$_permissionCopyWithImpl<$Res>;
+abstract class _$$_locationpermissionCopyWith<$Res> {
+  factory _$$_locationpermissionCopyWith(_$_locationpermission value,
+          $Res Function(_$_locationpermission) then) =
+      __$$_locationpermissionCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_permissionCopyWithImpl<$Res>
-    extends _$BusDetailsStateStatusCopyWithImpl<$Res, _$_permission>
-    implements _$$_permissionCopyWith<$Res> {
-  __$$_permissionCopyWithImpl(
-      _$_permission _value, $Res Function(_$_permission) _then)
+class __$$_locationpermissionCopyWithImpl<$Res>
+    extends _$BusDetailsStateStatusCopyWithImpl<$Res, _$_locationpermission>
+    implements _$$_locationpermissionCopyWith<$Res> {
+  __$$_locationpermissionCopyWithImpl(
+      _$_locationpermission _value, $Res Function(_$_locationpermission) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_permission implements _permission {
-  const _$_permission();
+class _$_locationpermission implements _locationpermission {
+  const _$_locationpermission();
 
   @override
   String toString() {
-    return 'BusDetailsStateStatus.permission()';
+    return 'BusDetailsStateStatus.locationpermission()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_permission);
+        (other.runtimeType == runtimeType && other is _$_locationpermission);
   }
 
   @override
@@ -855,11 +883,12 @@ class _$_permission implements _permission {
     required TResult Function() loading,
     required TResult Function() loaded,
     required TResult Function() failure,
-    required TResult Function() permission,
+    required TResult Function() locationpermission,
+    required TResult Function() notificationpermission,
     required TResult Function() locationdisable,
     required TResult Function() networkdisable,
   }) {
-    return permission();
+    return locationpermission();
   }
 
   @override
@@ -868,11 +897,12 @@ class _$_permission implements _permission {
     TResult? Function()? loading,
     TResult? Function()? loaded,
     TResult? Function()? failure,
-    TResult? Function()? permission,
+    TResult? Function()? locationpermission,
+    TResult? Function()? notificationpermission,
     TResult? Function()? locationdisable,
     TResult? Function()? networkdisable,
   }) {
-    return permission?.call();
+    return locationpermission?.call();
   }
 
   @override
@@ -881,13 +911,14 @@ class _$_permission implements _permission {
     TResult Function()? loading,
     TResult Function()? loaded,
     TResult Function()? failure,
-    TResult Function()? permission,
+    TResult Function()? locationpermission,
+    TResult Function()? notificationpermission,
     TResult Function()? locationdisable,
     TResult Function()? networkdisable,
     required TResult orElse(),
   }) {
-    if (permission != null) {
-      return permission();
+    if (locationpermission != null) {
+      return locationpermission();
     }
     return orElse();
   }
@@ -898,11 +929,13 @@ class _$_permission implements _permission {
     required TResult Function(_loading value) loading,
     required TResult Function(_loaded value) loaded,
     required TResult Function(_failure value) failure,
-    required TResult Function(_permission value) permission,
+    required TResult Function(_locationpermission value) locationpermission,
+    required TResult Function(_notificationpermission value)
+        notificationpermission,
     required TResult Function(_locationdisable value) locationdisable,
     required TResult Function(_networkdisable value) networkdisable,
   }) {
-    return permission(this);
+    return locationpermission(this);
   }
 
   @override
@@ -911,11 +944,12 @@ class _$_permission implements _permission {
     TResult? Function(_loading value)? loading,
     TResult? Function(_loaded value)? loaded,
     TResult? Function(_failure value)? failure,
-    TResult? Function(_permission value)? permission,
+    TResult? Function(_locationpermission value)? locationpermission,
+    TResult? Function(_notificationpermission value)? notificationpermission,
     TResult? Function(_locationdisable value)? locationdisable,
     TResult? Function(_networkdisable value)? networkdisable,
   }) {
-    return permission?.call(this);
+    return locationpermission?.call(this);
   }
 
   @override
@@ -924,20 +958,155 @@ class _$_permission implements _permission {
     TResult Function(_loading value)? loading,
     TResult Function(_loaded value)? loaded,
     TResult Function(_failure value)? failure,
-    TResult Function(_permission value)? permission,
+    TResult Function(_locationpermission value)? locationpermission,
+    TResult Function(_notificationpermission value)? notificationpermission,
     TResult Function(_locationdisable value)? locationdisable,
     TResult Function(_networkdisable value)? networkdisable,
     required TResult orElse(),
   }) {
-    if (permission != null) {
-      return permission(this);
+    if (locationpermission != null) {
+      return locationpermission(this);
     }
     return orElse();
   }
 }
 
-abstract class _permission implements BusDetailsStateStatus {
-  const factory _permission() = _$_permission;
+abstract class _locationpermission implements BusDetailsStateStatus {
+  const factory _locationpermission() = _$_locationpermission;
+}
+
+/// @nodoc
+abstract class _$$_notificationpermissionCopyWith<$Res> {
+  factory _$$_notificationpermissionCopyWith(_$_notificationpermission value,
+          $Res Function(_$_notificationpermission) then) =
+      __$$_notificationpermissionCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_notificationpermissionCopyWithImpl<$Res>
+    extends _$BusDetailsStateStatusCopyWithImpl<$Res, _$_notificationpermission>
+    implements _$$_notificationpermissionCopyWith<$Res> {
+  __$$_notificationpermissionCopyWithImpl(_$_notificationpermission _value,
+      $Res Function(_$_notificationpermission) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_notificationpermission implements _notificationpermission {
+  const _$_notificationpermission();
+
+  @override
+  String toString() {
+    return 'BusDetailsStateStatus.notificationpermission()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_notificationpermission);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function() loaded,
+    required TResult Function() failure,
+    required TResult Function() locationpermission,
+    required TResult Function() notificationpermission,
+    required TResult Function() locationdisable,
+    required TResult Function() networkdisable,
+  }) {
+    return notificationpermission();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loading,
+    TResult? Function()? loaded,
+    TResult? Function()? failure,
+    TResult? Function()? locationpermission,
+    TResult? Function()? notificationpermission,
+    TResult? Function()? locationdisable,
+    TResult? Function()? networkdisable,
+  }) {
+    return notificationpermission?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function()? loaded,
+    TResult Function()? failure,
+    TResult Function()? locationpermission,
+    TResult Function()? notificationpermission,
+    TResult Function()? locationdisable,
+    TResult Function()? networkdisable,
+    required TResult orElse(),
+  }) {
+    if (notificationpermission != null) {
+      return notificationpermission();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_loading value) loading,
+    required TResult Function(_loaded value) loaded,
+    required TResult Function(_failure value) failure,
+    required TResult Function(_locationpermission value) locationpermission,
+    required TResult Function(_notificationpermission value)
+        notificationpermission,
+    required TResult Function(_locationdisable value) locationdisable,
+    required TResult Function(_networkdisable value) networkdisable,
+  }) {
+    return notificationpermission(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_loading value)? loading,
+    TResult? Function(_loaded value)? loaded,
+    TResult? Function(_failure value)? failure,
+    TResult? Function(_locationpermission value)? locationpermission,
+    TResult? Function(_notificationpermission value)? notificationpermission,
+    TResult? Function(_locationdisable value)? locationdisable,
+    TResult? Function(_networkdisable value)? networkdisable,
+  }) {
+    return notificationpermission?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_loading value)? loading,
+    TResult Function(_loaded value)? loaded,
+    TResult Function(_failure value)? failure,
+    TResult Function(_locationpermission value)? locationpermission,
+    TResult Function(_notificationpermission value)? notificationpermission,
+    TResult Function(_locationdisable value)? locationdisable,
+    TResult Function(_networkdisable value)? networkdisable,
+    required TResult orElse(),
+  }) {
+    if (notificationpermission != null) {
+      return notificationpermission(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _notificationpermission implements BusDetailsStateStatus {
+  const factory _notificationpermission() = _$_notificationpermission;
 }
 
 /// @nodoc
@@ -981,7 +1150,8 @@ class _$_locationdisable implements _locationdisable {
     required TResult Function() loading,
     required TResult Function() loaded,
     required TResult Function() failure,
-    required TResult Function() permission,
+    required TResult Function() locationpermission,
+    required TResult Function() notificationpermission,
     required TResult Function() locationdisable,
     required TResult Function() networkdisable,
   }) {
@@ -994,7 +1164,8 @@ class _$_locationdisable implements _locationdisable {
     TResult? Function()? loading,
     TResult? Function()? loaded,
     TResult? Function()? failure,
-    TResult? Function()? permission,
+    TResult? Function()? locationpermission,
+    TResult? Function()? notificationpermission,
     TResult? Function()? locationdisable,
     TResult? Function()? networkdisable,
   }) {
@@ -1007,7 +1178,8 @@ class _$_locationdisable implements _locationdisable {
     TResult Function()? loading,
     TResult Function()? loaded,
     TResult Function()? failure,
-    TResult Function()? permission,
+    TResult Function()? locationpermission,
+    TResult Function()? notificationpermission,
     TResult Function()? locationdisable,
     TResult Function()? networkdisable,
     required TResult orElse(),
@@ -1024,7 +1196,9 @@ class _$_locationdisable implements _locationdisable {
     required TResult Function(_loading value) loading,
     required TResult Function(_loaded value) loaded,
     required TResult Function(_failure value) failure,
-    required TResult Function(_permission value) permission,
+    required TResult Function(_locationpermission value) locationpermission,
+    required TResult Function(_notificationpermission value)
+        notificationpermission,
     required TResult Function(_locationdisable value) locationdisable,
     required TResult Function(_networkdisable value) networkdisable,
   }) {
@@ -1037,7 +1211,8 @@ class _$_locationdisable implements _locationdisable {
     TResult? Function(_loading value)? loading,
     TResult? Function(_loaded value)? loaded,
     TResult? Function(_failure value)? failure,
-    TResult? Function(_permission value)? permission,
+    TResult? Function(_locationpermission value)? locationpermission,
+    TResult? Function(_notificationpermission value)? notificationpermission,
     TResult? Function(_locationdisable value)? locationdisable,
     TResult? Function(_networkdisable value)? networkdisable,
   }) {
@@ -1050,7 +1225,8 @@ class _$_locationdisable implements _locationdisable {
     TResult Function(_loading value)? loading,
     TResult Function(_loaded value)? loaded,
     TResult Function(_failure value)? failure,
-    TResult Function(_permission value)? permission,
+    TResult Function(_locationpermission value)? locationpermission,
+    TResult Function(_notificationpermission value)? notificationpermission,
     TResult Function(_locationdisable value)? locationdisable,
     TResult Function(_networkdisable value)? networkdisable,
     required TResult orElse(),
@@ -1107,7 +1283,8 @@ class _$_networkdisable implements _networkdisable {
     required TResult Function() loading,
     required TResult Function() loaded,
     required TResult Function() failure,
-    required TResult Function() permission,
+    required TResult Function() locationpermission,
+    required TResult Function() notificationpermission,
     required TResult Function() locationdisable,
     required TResult Function() networkdisable,
   }) {
@@ -1120,7 +1297,8 @@ class _$_networkdisable implements _networkdisable {
     TResult? Function()? loading,
     TResult? Function()? loaded,
     TResult? Function()? failure,
-    TResult? Function()? permission,
+    TResult? Function()? locationpermission,
+    TResult? Function()? notificationpermission,
     TResult? Function()? locationdisable,
     TResult? Function()? networkdisable,
   }) {
@@ -1133,7 +1311,8 @@ class _$_networkdisable implements _networkdisable {
     TResult Function()? loading,
     TResult Function()? loaded,
     TResult Function()? failure,
-    TResult Function()? permission,
+    TResult Function()? locationpermission,
+    TResult Function()? notificationpermission,
     TResult Function()? locationdisable,
     TResult Function()? networkdisable,
     required TResult orElse(),
@@ -1150,7 +1329,9 @@ class _$_networkdisable implements _networkdisable {
     required TResult Function(_loading value) loading,
     required TResult Function(_loaded value) loaded,
     required TResult Function(_failure value) failure,
-    required TResult Function(_permission value) permission,
+    required TResult Function(_locationpermission value) locationpermission,
+    required TResult Function(_notificationpermission value)
+        notificationpermission,
     required TResult Function(_locationdisable value) locationdisable,
     required TResult Function(_networkdisable value) networkdisable,
   }) {
@@ -1163,7 +1344,8 @@ class _$_networkdisable implements _networkdisable {
     TResult? Function(_loading value)? loading,
     TResult? Function(_loaded value)? loaded,
     TResult? Function(_failure value)? failure,
-    TResult? Function(_permission value)? permission,
+    TResult? Function(_locationpermission value)? locationpermission,
+    TResult? Function(_notificationpermission value)? notificationpermission,
     TResult? Function(_locationdisable value)? locationdisable,
     TResult? Function(_networkdisable value)? networkdisable,
   }) {
@@ -1176,7 +1358,8 @@ class _$_networkdisable implements _networkdisable {
     TResult Function(_loading value)? loading,
     TResult Function(_loaded value)? loaded,
     TResult Function(_failure value)? failure,
-    TResult Function(_permission value)? permission,
+    TResult Function(_locationpermission value)? locationpermission,
+    TResult Function(_notificationpermission value)? notificationpermission,
     TResult Function(_locationdisable value)? locationdisable,
     TResult Function(_networkdisable value)? networkdisable,
     required TResult orElse(),
